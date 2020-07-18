@@ -6,6 +6,7 @@ import { Container, Row, Col } from "./components/Grid";
 import "./App.css";
 import SearchButton from "./components/SearchButton";
 import API from "./utils/API";
+import { BookList, BookListItem } from "./components/BookList";
 
 function App() {
 
@@ -21,8 +22,8 @@ function App() {
 
     const handleFormSubmit = event => {
         event.preventDefault();
-        API.getBooks(BookSearch)
-          .then(res => setBooks(res.data))
+        API.getBooks(bookSearch)
+          .then(res => setBooks(res.data.items))
           .catch(err => console.log(err));
     };
 
@@ -34,10 +35,10 @@ function App() {
           <Row>
             <Col size="xs-8 sm-8">
               <Input
-              value={bookSearch}
+                value={bookSearch}
                 onChange={handleInputChange}
                 name="BookSearch"
-                placeholder="Search For a Book"
+                placeholder="Search For a Book Title"
                 />
             </Col>
             <Col size="xs-3 sm-2">
@@ -47,11 +48,23 @@ function App() {
                 className="input-lg"
               >
                 Search
-              </SearchButton>
-                
-                
+              </SearchButton>                        
             </Col>
           </Row>
+          <Row>
+            <Col size="xs-12">
+                <BookList>
+                    {books.map(book => {
+                        return (
+                            <BookListItem
+                                key={book.volumeInfo.title}
+                                title={book.volumeInfo.title}
+                            />
+                        );
+                    })}
+                </BookList>
+            </Col>       
+          </Row>                      
       </Container> 
     </div>
   );
