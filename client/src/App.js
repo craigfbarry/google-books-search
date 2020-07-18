@@ -16,14 +16,15 @@ function App() {
     const handleInputChange = event => {
         const {value} = event.target;
         setBookSearch(value);
-        console.log(value)
     }
 
 
     const handleFormSubmit = event => {
         event.preventDefault();
         API.getBooks(bookSearch)
-          .then(res => setBooks(res.data.items))
+          .then(res => {setBooks(res.data.items)
+              console.log(res.data.items)
+          })
           .catch(err => console.log(err));
     };
 
@@ -32,12 +33,12 @@ function App() {
       <Header/>  
       <Container>
         <Search/>
-          <Row>
+          <Row className="mb-3">
             <Col size="xs-8 sm-8">
               <Input
+               name="BookSearch"
                 value={bookSearch}
                 onChange={handleInputChange}
-                name="BookSearch"
                 placeholder="Search For a Book Title"
                 />
             </Col>
@@ -57,8 +58,12 @@ function App() {
                     {books.map(book => {
                         return (
                             <BookListItem
-                                key={book.volumeInfo.title}
+                                key={book.volumeInfo.id}
                                 title={book.volumeInfo.title}
+                                authors={book.volumeInfo.authors}
+                                description={book.volumeInfo.description}
+                                link={book.volumeInfo.selfLink}
+                                image={book.volumeInfo.imageLinks.thumbnail}
                             />
                         );
                     })}
