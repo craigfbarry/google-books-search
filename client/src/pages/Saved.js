@@ -2,6 +2,7 @@ import React, { useEffect,useState } from "react";
 import API from "../utils/API";
 import { Container, Row, Col } from "../components/Grid";
 import { BookList, BookListItem } from "../components/BookList";
+import DeleteButton from "../components/DeleteButton";
 
 
 function Saved() {
@@ -20,6 +21,15 @@ function Saved() {
       })
       .catch(err => console.log(err));
     }
+
+  function deleteBook(id) {
+    API.deleteBook(id)
+      .then(res => loadBooks())
+      .catch(err => console.log(err));
+    }
+
+
+
     return (
         <div>
           <Container>
@@ -33,15 +43,17 @@ function Saved() {
                     <BookList>
                         {databaseBooks.map(book => {
                             return (
+                              <div>
                                 <BookListItem
                                     key={book._id}
                                     title={book.title}
                                     authors={book.authors}
                                     description={book.description}
                                     link={book.link}
-                                    image={book.image}
-                                    
+                                    image={book.image}                                    
                                 />
+                                <DeleteButton onClick={() => deleteBook(book._id)} />
+                              </div>
                             );
                         })}
                     </BookList>

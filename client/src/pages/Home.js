@@ -10,15 +10,18 @@ import { BookList, BookListItem } from "../components/BookList";
 
 function Home() {
 
+  //React hooks for handling input from the user and getting data from the API
+  
     const [books, setBooks] = useState([]);
     const [bookSearch,setBookSearch] = useState("");
 
+  //OnChange handler  
     const handleInputChange = event => {
         const {value} = event.target;
         setBookSearch(value);
     }
 
-
+  //Submit button handler
     const handleFormSubmit = event => {
         event.preventDefault();
         API.getBooks(bookSearch)
