@@ -5,5 +5,9 @@ export default {
     getBooks: function(query){
         console.log("ran query")
         return axios.get(BASEURL + query)
-    }
+    },
+    
+    getDatabaseBooks: function() {
+        return axios.get("/api/books");
+      }
 };

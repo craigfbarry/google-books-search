@@ -1,17 +1,54 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
+import API from "../utils/API";
+import { Container, Row, Col } from "../components/Grid";
+import { BookList, BookListItem } from "../components/BookList";
 
 
 function Saved() {
+
+  const [databaseBooks, setDatabaseBooks] = useState([]);
+
+  useEffect(() => {
+    loadBooks()
+  }, [])
+
+
+  function loadBooks() {
+    API.getDatabaseBooks()
+      .then(res => {setDatabaseBooks(res.data)
+        console.log(res.data)
+      })
+      .catch(err => console.log(err));
+    }
     return (
         <div>
-          <h1>Saved Searches</h1>
-          <p>
-            Nunc pharetra finibus est at efficitur. Praesent sed congue diam. Integer gravida dui
-            mauris, ut interdum nunc egestas sed. Aenean sed mollis diam. Nunc aliquet risus ac finibus
-            porta. Nam quis arcu non lectus tincidunt fermentum. Suspendisse aliquet orci porta quam
-            semper imperdiet. Praesent euismod mi justo, faucibus scelerisque risus cursus in. Sed
-            rhoncus mollis diam, sit amet facilisis lectus blandit at.
-          </p>
+          <Container>
+            <div className="d-flex justify-content-center my-5">
+                <Row>
+                    <h3>Saved Searches</h3>
+                </Row>
+            </div>
+            <Row>
+                <Col size="xs-12">
+                    <BookList>
+                        {databaseBooks.map(book => {
+                            return (
+                                <BookListItem
+                                    key={book._id}
+                                    title={book.title}
+                                    authors={book.authors}
+                                    description={book.description}
+                                    link={book.link}
+                                    image={book.image}
+                                    
+                                />
+                            );
+                        })}
+                    </BookList>
+                </Col>
+            </Row>
+
+          </Container>
         </div>
       );
 }

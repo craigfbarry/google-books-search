@@ -64,7 +64,7 @@ function Home() {
                                 title={book.volumeInfo.title}
                                 authors={book.volumeInfo.authors}
                                 description={book.volumeInfo.description}
-                                link={book.volumeInfo.selfLink}
+                                link={book.selfLink}
                                 image={book.volumeInfo.imageLinks.thumbnail}
                             />
                         );
