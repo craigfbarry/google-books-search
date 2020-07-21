@@ -25,7 +25,7 @@ app.get("*", (req, res) => {
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/googlebooks",
+  process.env.MONGODB_URI || "mongodb://User21:Password99@ds139896.mlab.com:39896/heroku_jk1v5xdb",
   { useNewUrlParser: true,
     useUnifiedTopology: true 
    }  
