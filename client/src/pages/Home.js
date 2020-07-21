@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import { Container, Row, Col } from "../components/Grid";
 import "../App.css";
 import SearchButton from "../components/SearchButton";
+import SaveButton from "../components/SaveButton";
 import API from "../utils/API";
 import { BookList, BookListItem } from "../components/BookList";
 
@@ -29,7 +30,22 @@ function Home() {
               console.log(res.data.items)
           })
           .catch(err => console.log(err));
-    };
+    }
+
+    function saveBook(data) {
+      console.log(data);
+      API.saveBook({
+        title:data.volumeInfo.title,
+        authors:data.volumeInfo.authors,
+        description:data.volumeInfo.description,
+        link:data.volumeInfo.infoLink,
+        image:data.volumeInfo.imageLinks.thumbnail
+      })
+        .then(console.log("Saved to Database"))
+        .catch(err => console.log(err));
+      }
+
+
 
   return (
     <div className="App">
@@ -38,7 +54,8 @@ function Home() {
         <Search/>
           <div className="mb-5">
           <Row>
-            <Col size="xs-8 sm-8">
+            <Col size="xs-2 sm-2"></Col>
+            <Col size="xs-6 sm-6">
               <Input
                name="BookSearch"
                 value={bookSearch}
@@ -62,14 +79,22 @@ function Home() {
                 <BookList>
                     {books.map(book => {
                         return (
-                            <BookListItem
-                                key={book.volumeInfo.id}
-                                title={book.volumeInfo.title}
-                                authors={book.volumeInfo.authors}
-                                description={book.volumeInfo.description}
-                                link={book.selfLink}
-                                image={book.volumeInfo.imageLinks.thumbnail}
-                            />
+                          <div className="mb-5 mt-1">
+                            <Container>
+                                <BookListItem
+                                    key={book.volumeInfo.id}
+                                    title={book.volumeInfo.title}
+                                    authors={book.volumeInfo.authors}
+                                    description={book.volumeInfo.description}                                    
+                                    image={book.volumeInfo.imageLinks.thumbnail}
+                                />
+                                
+                                <a rel="noreferrer noopener" target="_blank" href={book.volumeInfo.infoLink} className="btn bg-warning mt-3">
+                                    View
+                                </a>
+                                <SaveButton onClick={() => saveBook(book)} />
+                            </Container>            
+                          </div>
                         );
                     })}
                 </BookList>

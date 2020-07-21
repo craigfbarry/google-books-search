@@ -43,16 +43,22 @@ function Saved() {
                     <BookList>
                         {databaseBooks.map(book => {
                             return (
-                              <div>
-                                <BookListItem
-                                    key={book._id}
-                                    title={book.title}
-                                    authors={book.authors}
-                                    description={book.description}
-                                    link={book.link}
-                                    image={book.image}                                    
-                                />
-                                <DeleteButton onClick={() => deleteBook(book._id)} />
+                              <div className="mb-5">
+                                <Container>
+                                    <BookListItem
+                                        key={book._id}
+                                        title={book.title}
+                                        authors={book.authors}
+                                        description={book.description}
+                                        image={book.image}                                    
+                                    />
+                                  <div className="row justify-content-center">
+                                    <a rel="noreferrer noopener" target="_blank" href={book.link} className="btn bg-warning mt-3">
+                                        View
+                                    </a>
+                                    <DeleteButton onClick={() => deleteBook(book._id)} />
+                                    </div>
+                                </Container>
                               </div>
                             );
                         })}
