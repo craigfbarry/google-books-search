@@ -41,7 +41,7 @@ function Home() {
         link:data.volumeInfo.infoLink,
         image:data.volumeInfo.imageLinks.thumbnail
       })
-        .then(console.log("Saved to Database"))
+        .then(alert("Saved to Database"))
         .catch(err => console.log(err));
       }
 
